@@ -9,8 +9,12 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import datetime
 from pathlib import Path
+# from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+# from django.utils.encoding import smart_str
+# django.utils.encoding.smart_text = smart_str
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +29,11 @@ SECRET_KEY = "django-insecure-)&82j+txs4a*v(os#=xu=m8qfz4-$!x=hgim_(q7dn!a7$j2gw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+ 'localhost',
+ '127.0.0.1',
+]
+
 
 
 # Application definition
@@ -38,21 +46,17 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'rest_framework',
-    'rest_framework.jwt',
+    'rest_framework_simplejwt',
+    'api',
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-    ],
+  'DEFAULT_AUTHENTICATION_CLASSES': {
+    'rest_framework_simplejwt.authentication.JWTAuthentication'
+  }
 }
 
-JWT_AUTH = {
-    'JWT_SECRET_KEY': 'projectSpark',
-    'JWT_ALGORITHM': 'HS256',
-    'JWT_ALLOW_REFRESH': True,
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
-}
+AUTH_USER_MODEL = 'api.User'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

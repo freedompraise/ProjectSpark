@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import User, Idea, Comment
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

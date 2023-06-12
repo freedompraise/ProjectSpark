@@ -12,8 +12,35 @@ class User(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username', 'password']
+
+    @property
+    def is_anonymous(self):
+        return False
+
+    @property
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def get_full_name(self):
+        return self.username
+    
+    def get_by_natural_key(self, email):
+        return self.get(email=email)
+
+
+    class Meta:
+        app_label = 'api'
+
+
+
     def __str__(self):
         return self.username
+
 
 
 class Idea(models.Model):

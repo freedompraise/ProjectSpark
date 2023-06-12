@@ -1,31 +1,44 @@
-# Create your views here.
+# rest framework
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from rest_framework import generics
+# root
 from .serializers import UserSerializer
 from .models import User
+# django
+from django.contrib.auth import authenticate
+# jwt
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
 
 class UserRegistrationView(APIView):
     permission_classes = (AllowAny,)
+    authentication_classes = [JWTAuthentication]
 
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-            return Response({"message": "User registered successfully."}, status=status.HTTP_201_CREATED)
+            token_serializer = TokenObtainPairSerializer()
+            token = token_serializer.get_token(user)
+            return Response({'access': str(token.access_token), 'refresh': str(token)})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class UserAuthenticationView(APIView):
-    permission_classes = (AllowAny,)
+class UserAuthenticationView(generics.CreateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [AllowAny]
+    serializer_class = TokenObtainPairSerializer
 
-    def post(self, request):
-        username = request.data.get("username")
-        password = request.data.get("password")
-        user = User.objects.filter(username=username).first()
-        if user is None or not user.check_password(password):
-            return Response({"message": "Invalid username or password."}, status=status.HTTP_400_BAD_REQUEST)
-        # You can implement your own token generation or use a library like Django REST framework JWT for authentication
-        # Example: generate token
-        # token = generate_token(user)
-        return Response({"message": "User authenticated successfully.", "token": token}, status=status.HTTP_200_OK)
+    def create(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.user
+        token = serializer.validated_data['access']
+        return Response({'token': token})
