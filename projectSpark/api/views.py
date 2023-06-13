@@ -5,8 +5,14 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework import generics
 # root
-from .serializers import UserSerializer
-from .models import User
+from .serializers import (
+    UserSerializer,
+    IdeaSerializer,
+)
+from .models import (
+    User,
+    Idea,
+)
 # django
 from django.contrib.auth import authenticate
 # jwt
@@ -31,6 +37,7 @@ class UserRegistrationView(APIView):
             return Response({'access': str(token.access_token), 'refresh': str(token)})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class UserAuthenticationView(TokenObtainPairView):
     serializer_class = TokenObtainPairSerializer
 
@@ -40,3 +47,16 @@ class UserAuthenticationView(TokenObtainPairView):
         if token:
             return Response({'token': token}, status=status.HTTP_200_OK)
         return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class IdeaListAPIVIEW(generics.ListCreateAPIView):
+    queryset = Idea.objects.all()
+    serializer_class = IdeaSerializer
+    permission_classes = (AllowAny,)
+    authentication_classes = [JWTAuthentication]
+
+class IdeaDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Idea.objects.all()
+    serializer_class = IdeaSerializer
+    permission_classes = (AllowAny,)
+    authentication_classes = [JWTAuthentication]
