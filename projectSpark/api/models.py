@@ -1,11 +1,12 @@
 from django.db import models
+from .manager import UserManager
 
-# Create your models here.
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 from django.db import models
 
 
-class User(models.Model):
+class User(AbstractBaseUser):
     username = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=100)
@@ -14,6 +15,8 @@ class User(models.Model):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'password']
+
+    objects = UserManager()
 
     @property
     def is_anonymous(self):
@@ -28,10 +31,12 @@ class User(models.Model):
 
     def get_full_name(self):
         return self.username
-    
+
     def get_by_natural_key(self, email):
         return self.get(email=email)
 
+    def get_short_name(self):
+        return self.username
 
     class Meta:
         app_label = 'api'

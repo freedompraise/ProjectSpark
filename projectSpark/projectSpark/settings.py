@@ -99,6 +99,11 @@ DATABASES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = [
+    'rest_framework_simplejwt.authentication.JWTAuthentication',
+    # Other authentication backends...
+]
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
