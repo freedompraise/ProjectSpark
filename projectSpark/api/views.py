@@ -8,10 +8,12 @@ from rest_framework import generics
 from .serializers import (
     UserSerializer,
     IdeaSerializer,
+    CommentSerializer,
 )
 from .models import (
     User,
     Idea,
+    Comment,
 )
 # django
 from django.contrib.auth import authenticate
@@ -23,7 +25,7 @@ from rest_framework_simplejwt.views import (
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-
+#REGISTRATION   
 class UserRegistrationView(APIView):
     permission_classes = (AllowAny,)
     authentication_classes = [JWTAuthentication]
@@ -37,7 +39,7 @@ class UserRegistrationView(APIView):
             return Response({'access': str(token.access_token), 'refresh': str(token)})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+#AUTHENTICATION
 class UserAuthenticationView(TokenObtainPairView):
     serializer_class = TokenObtainPairSerializer
 
@@ -48,15 +50,48 @@ class UserAuthenticationView(TokenObtainPairView):
             return Response({'token': token}, status=status.HTTP_200_OK)
         return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
-
-class IdeaListAPIVIEW(generics.ListCreateAPIView):
+# CREATE AND LIST IDEAS
+class IdeaListAPIView(generics.ListCreateAPIView):
     queryset = Idea.objects.all()
     serializer_class = IdeaSerializer
     permission_classes = (AllowAny,)
     authentication_classes = [JWTAuthentication]
 
+# RETRIEVE, UPDATE AND DELETE IDEAS
 class IdeaDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Idea.objects.all()
     serializer_class = IdeaSerializer
+    permission_classes = (AllowAny,)
+    authentication_classes = [JWTAuthentication]
+
+# CREATE COMMENTS
+class CommentListCreateAPIView(generics.ListCreateAPIView):
+    serializer_class = CommentSerializer
+    permission_classes = (AllowAny,)
+    authentication_classes = [JWTAuthentication]
+
+    def perform_create(self, serializer):
+        idea_id = self.kwargs['idea_id']
+        serializer.save(idea_id=idea_id)
+    
+    def get_queryset(self):
+        idea_id = self.kwargs['idea_id']
+        return Comment.objects.filter(idea_id=idea_id)
+
+# LIST COMMENTS
+class CommentListAPIView(generics.ListAPIView):
+    serializer_class = CommentSerializer
+    permission_classes = (AllowAny,)
+    authentication_classes = [JWTAuthentication]
+
+    def get_queryset(self):
+        idea_id = self.kwargs['idea_id']
+        return Comment.objects.filter(idea_id=idea_id)
+
+
+# RETRIEVE, UPDATE AND DELETE COMMENTS
+class CommentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
     permission_classes = (AllowAny,)
     authentication_classes = [JWTAuthentication]
