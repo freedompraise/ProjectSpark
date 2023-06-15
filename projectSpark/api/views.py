@@ -17,6 +17,7 @@ from .models import (
 )
 # django
 from django.contrib.auth import authenticate
+from django.http import request
 # jwt
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -56,6 +57,12 @@ class IdeaListAPIView(generics.ListCreateAPIView):
     serializer_class = IdeaSerializer
     permission_classes = (AllowAny,)
     authentication_classes = [JWTAuthentication]
+    # TO DO
+    # def get_queryset(self):
+    #     user_id = request.user.id
+    #     return Idea.objects.filter(created_by=user_id)
+    
+
 
 # RETRIEVE, UPDATE AND DELETE IDEAS
 class IdeaDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
