@@ -50,11 +50,14 @@ pip install -r requirements.txt
 ```
 
 5. Set up the database:
-run ```sh 
+Change working directory to BASE_DIR
+```sh 
 cd projecSpark
 ```
-
-then run ```python manage.py migrate```
+Run
+```sh 
+python manage.py migrate
+```
 
 6. Start the development server:
 ```bash 
@@ -74,7 +77,7 @@ Contributions are welcome! If you would like to contribute to **projectSpark-api
 
 1. Fork the repository.
 2. Create a new branch for your feature/bug fix.
-3. Commit your changes and push to your branch.
+3. Commit your changes and push them to your branch.
 4. Submit a pull request.
 
 ## License
