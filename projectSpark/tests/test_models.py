@@ -1,7 +1,7 @@
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-from .models import User, Idea, Comment
+from api.models import User, Idea, Comment
 
 class ProjectSparkAPITestCase(APITestCase):
     def setUp(self):
