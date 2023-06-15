@@ -25,7 +25,7 @@ These instructions will help you get the project up and running on your local ma
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-freedompraise/projectSpark-api-v1.git
+git clone https://github.com/freedompraise/projectSpark-api-v1.git
 ```
 
 2. Create a virtual environment:
