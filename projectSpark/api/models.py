@@ -41,8 +41,6 @@ class User(AbstractBaseUser):
     class Meta:
         app_label = 'api'
 
-
-
     def __str__(self):
         return self.username
 

@@ -18,6 +18,7 @@ from .models import (
 # django
 from django.contrib.auth import authenticate
 from django.http import request
+from django.contrib.auth import get_user_model
 # jwt
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -25,6 +26,8 @@ from rest_framework_simplejwt.views import (
 )
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
+
+User = get_user_model()
 
 #REGISTRATION   
 class UserRegistrationView(APIView):
@@ -39,6 +42,32 @@ class UserRegistrationView(APIView):
             token = token_serializer.get_token(user)
             return Response({'access': str(token.access_token), 'refresh': str(token)})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# LOGIN
+class UserLoginView(APIView):
+    permission_classes = (AllowAny,)
+    authentication_classes = [JWTAuthentication]
+
+    def post(self, request):
+        email = request.data.get('email')
+        password = request.data.get('password')
+
+        user = User.objects.filter(email=email).first()
+
+        if user and user.check_password(password):
+            refresh = RefreshToken.for_user(user)
+            return Response(
+                {
+                    'refresh': str(refresh),
+                    'access': str(refresh.access_token),
+                },
+                status=status.HTTP_200_OK
+            )
+        else:
+            return Response(
+                {'detail': 'Invalid credentials'},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
 
 #AUTHENTICATION
 class UserAuthenticationView(TokenObtainPairView):
