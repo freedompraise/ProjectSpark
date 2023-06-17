@@ -37,6 +37,9 @@ class User(AbstractBaseUser):
 
     def get_short_name(self):
         return self.username
+    
+    def set_password(self, password):
+        self.password = password
 
     class Meta:
         app_label = 'api'
