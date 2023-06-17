@@ -24,7 +24,7 @@ class UserAuthenticationTests(APITestCase):
     def test_user_authentication(self):
         url = '/api/auth/'
         data = {
-            'username': 'testuser',
+            'email': 'test@example.com',
             'password': 'testpassword'
         }
         response = self.client.post(url, data)
@@ -39,7 +39,7 @@ class UserLoginTests(APITestCase):
     def test_user_login(self):
         url = '/api/login/'
         data = {
-            'username': 'testuser',
+            'email': 'test@example.com',
             'password': 'testpassword'
         }
         response = self.client.post(url, data)

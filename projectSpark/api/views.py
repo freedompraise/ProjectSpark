@@ -24,8 +24,9 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer 
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.tokens import RefreshToken
 
 User = get_user_model()
 
@@ -42,6 +43,7 @@ class UserRegistrationView(APIView):
             token = token_serializer.get_token(user)
             return Response({'access': str(token.access_token), 'refresh': str(token), 'user': serializer.data}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 # UserAuthenticationView
 class UserAuthenticationView(TokenObtainPairView):
     serializer_class = TokenObtainPairSerializer
@@ -71,6 +73,7 @@ class UserLoginView(APIView):
                 {
                     'refresh': str(refresh),
                     'access': str(refresh.access_token),
+                    'token': str(refresh.access_token),
                 },
                 status=status.HTTP_200_OK
             )
