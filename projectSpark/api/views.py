@@ -58,7 +58,9 @@ class UserRegistrationView(APIView):
 
 # UserLoginView
 class UserLoginView(APIView):
+    permission_classes = (AllowAny,)
     authentication_classes = [JWTAuthentication]
+
     def post(self, request):
         email = request.data.get('email')
         password = request.data.get('password')
@@ -66,12 +68,9 @@ class UserLoginView(APIView):
         user = User.objects.filter(email=email).first()
 
         if user and user.check_password(password):
-            print("Password correct")
-            # refresh = RefreshToken.for_user(user)
             return Response(
                 {
-                    'refresh': str(refresh),
-                    'access': str(refresh.access_token),
+                    'message': 'Login successful',
                 },
                 status=status.HTTP_200_OK
             )
@@ -80,6 +79,7 @@ class UserLoginView(APIView):
                 {'detail': 'Invalid credentials'},
                 status=status.HTTP_401_UNAUTHORIZED
             )
+
 
 
 # CREATE AND LIST IDEAS
