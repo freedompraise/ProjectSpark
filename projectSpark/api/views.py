@@ -68,20 +68,18 @@ class UserLoginView(APIView):
         user = User.objects.filter(email=email).first()
 
         if user and user.check_password(password):
-            refresh = RefreshToken.for_user(user)
             return Response(
                 {
-                    'refresh': str(refresh),
-                    'access': str(refresh.access_token),
-                    'token': str(refresh.access_token),
+                    'message': 'Login successful',
                 },
                 status=status.HTTP_200_OK
             )
         else:
             return Response(
                 {'detail': 'Invalid credentials'},
-                status=status.HTTP_400_BAD_REQUEST
+                status=status.HTTP_401_UNAUTHORIZED
             )
+
 
 
 # CREATE AND LIST IDEAS
