@@ -57,6 +57,7 @@ class Idea(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    tags = models.ManyToManyField('Tag', related_name='ideas', blank=True)
 
     def __str__(self):
         return self.title
@@ -71,3 +72,9 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment on '{self.idea.title}' by {self.commenter.username}"
+
+class Tag(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(max_length=50, unique=True)
+    def __str__(self):
+        return self.name

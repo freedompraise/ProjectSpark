@@ -1,24 +1,31 @@
 # rest framework
-from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from rest_framework import generics
+from rest_framework import(
+    filters,
+    generics,
+    status,
+    viewsets,
+) 
 # root
 from .serializers import (
     UserSerializer,
     IdeaSerializer,
     CommentSerializer,
+    TagSerializer,
 )
 from .models import (
     User,
     Idea,
     Comment,
+    Tag,
 )
 # django
 from django.contrib.auth import authenticate
 from django.http import request
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 # jwt
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -81,7 +88,6 @@ class UserLoginView(APIView):
             )
 
 
-
 # CREATE AND LIST IDEAS
 class IdeaListAPIView(generics.ListCreateAPIView):
     queryset = Idea.objects.all()
@@ -93,7 +99,6 @@ class IdeaListAPIView(generics.ListCreateAPIView):
     #     user_id = request.user.id
     #     return Idea.objects.filter(created_by=user_id)
     
-
 
 # RETRIEVE, UPDATE AND DELETE IDEAS
 class IdeaDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
@@ -131,5 +136,12 @@ class CommentListAPIView(generics.ListAPIView):
 class CommentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+    permission_classes = (AllowAny,)
+    authentication_classes = [JWTAuthentication]
+
+# TAGS 
+class TagListAPIView(generics.ListAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
     permission_classes = (AllowAny,)
     authentication_classes = [JWTAuthentication]
