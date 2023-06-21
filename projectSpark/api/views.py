@@ -140,7 +140,7 @@ class CommentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView)
     authentication_classes = [JWTAuthentication]
 
 # TAGS 
-class TagListAPIView(generics.ListAPIView):
+class TagListAPIView(generics.ListCreateAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = (AllowAny,)
