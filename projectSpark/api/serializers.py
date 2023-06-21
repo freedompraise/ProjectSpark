@@ -14,9 +14,20 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+class TagField(serializers.StringRelatedField):
+    def to_internal_value(self, data):
+        # Return the tag name as-is
+        return data
+
+    def to_representation(self, value):
+        if isinstance(value, Tag):
+            # Convert Tag instance to its name for serialization
+            return value.name
+        return super().to_representation(value)
+
 
 class IdeaSerializer(serializers.ModelSerializer):
-    tags = serializers.PrimaryKeyRelatedField(queryset=Tag.objects.all(), many=True, required=False)
+    tags = TagField(many=True, required=False)
 
     class Meta:
         model = Idea
@@ -26,13 +37,12 @@ class IdeaSerializer(serializers.ModelSerializer):
         tags_data = validated_data.pop('tags', [])
         idea = Idea.objects.create(**validated_data)
 
-        for tag_name in tags_data:
-            slug = Tag.generate_unique_slug(tag_name)
-            tag, _ = Tag.objects.get_or_create(name=tag_name, tag_slug=slug)
-            idea.tags.add(tag)
+        for tag_data in tags_data:
+            tag, _ = Tag.objects.get_or_create(name=tag_data)
+            idea.tags.add(tag_id)
 
         if not tags_data:
-            idea.tags.set("")
+            idea.tags.clear()
 
         return idea
 
