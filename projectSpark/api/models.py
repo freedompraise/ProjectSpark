@@ -78,3 +78,13 @@ class Tag(models.Model):
     slug = models.SlugField(max_length=50, unique=True)
     def __str__(self):
         return self.name
+
+    @staticmethod
+    def generate_unique_slug(tag_name):
+        slug = slugify(tag_name)
+        unique_slug = slug
+        num = 1
+        while Tag.objects.filter(slug=unique_slug).exists():
+            unique_slug = f'{slug}-{num}'
+            num += 1
+        return unique_slug
