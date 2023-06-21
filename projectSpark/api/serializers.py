@@ -14,20 +14,14 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
-class TagField(serializers.StringRelatedField):
-    def to_internal_value(self, data):
-        # Return the tag name as-is
-        return data
 
-    def to_representation(self, value):
-        if isinstance(value, Tag):
-            # Convert Tag instance to its name for serialization
-            return value.name
-        return super().to_representation(value)
-
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ('id', 'name', 'ideas')
 
 class IdeaSerializer(serializers.ModelSerializer):
-    tags = TagField(many=True, required=False)
+    tags = TagSerializer(many=True, required=False)
 
     class Meta:
         model = Idea
@@ -38,8 +32,8 @@ class IdeaSerializer(serializers.ModelSerializer):
         idea = Idea.objects.create(**validated_data)
 
         for tag_data in tags_data:
-            tag, _ = Tag.objects.get_or_create(name=tag_data)
-            idea.tags.add(tag_id)
+            tag, _ = Tag.objects.get_or_create(name=tag_data['name'])
+            idea.tags.add(tag)
 
         if not tags_data:
             idea.tags.clear()
@@ -63,7 +57,3 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = ('id', 'idea', 'commenter', 'content', 'created_at', 'updated_at')
 
-class TagSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Tag
-        fields = ('id', 'name', 'ideas')
