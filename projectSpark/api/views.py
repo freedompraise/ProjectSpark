@@ -26,6 +26,7 @@ from django.contrib.auth import authenticate
 from django.http import request
 from django.contrib.auth import get_user_model
 from django.db.models import Q
+from django.utils.text import slugify
 # jwt
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -145,3 +146,8 @@ class TagListAPIView(generics.ListCreateAPIView):
     serializer_class = TagSerializer
     permission_classes = (AllowAny,)
     authentication_classes = [JWTAuthentication]
+
+    def perform_create(self, serializer):
+        tag_name = self.request.data.get('name')  # Assuming the tag name is provided in the request data
+        slug = Tag.generate_unique_slug(tag_name)
+        serializer.save(slug=slug)

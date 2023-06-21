@@ -35,9 +35,6 @@ class IdeaSerializer(serializers.ModelSerializer):
             tag, _ = Tag.objects.get_or_create(name=tag_data['name'])
             idea.tags.add(tag)
 
-        if not tags_data:
-            idea.tags.clear()
-
         return idea
 
     def update(self, instance, validated_data):
@@ -46,7 +43,7 @@ class IdeaSerializer(serializers.ModelSerializer):
 
         instance.tags.clear()
         for tag_name in tags_data:
-            tag, _ = Tag.objects.get_or_create(name=tag_name)
+            tag, _ = Tag.objects.get_or_create(name=tag_name['name'])
             instance.tags.add(tag)
 
         return instance
