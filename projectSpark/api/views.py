@@ -1,24 +1,32 @@
 # rest framework
-from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from rest_framework import generics
+from rest_framework import(
+    filters,
+    generics,
+    status,
+    viewsets,
+) 
 # root
 from .serializers import (
     UserSerializer,
     IdeaSerializer,
     CommentSerializer,
+    TagSerializer,
 )
 from .models import (
     User,
     Idea,
     Comment,
+    Tag,
 )
 # django
 from django.contrib.auth import authenticate
 from django.http import request
 from django.contrib.auth import get_user_model
+from django.db.models import Q
+from django.utils.text import slugify
 # jwt
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -81,7 +89,6 @@ class UserLoginView(APIView):
             )
 
 
-
 # CREATE AND LIST IDEAS
 class IdeaListAPIView(generics.ListCreateAPIView):
     queryset = Idea.objects.all()
@@ -94,13 +101,26 @@ class IdeaListAPIView(generics.ListCreateAPIView):
     #     return Idea.objects.filter(created_by=user_id)
     
 
-
 # RETRIEVE, UPDATE AND DELETE IDEAS
 class IdeaDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Idea.objects.all()
     serializer_class = IdeaSerializer
     permission_classes = (AllowAny,)
     authentication_classes = [JWTAuthentication]
+
+    def put(self, request, *args, **kwargs):
+        idea = self.get_object()
+        serializer = self.get_serializer(idea, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+    def patch(self, request, *args, **kwargs):
+        idea = self.get_object()
+        serializer = self.get_serializer(idea, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
 
 # CREATE COMMENTS
 class CommentListCreateAPIView(generics.ListCreateAPIView):
@@ -133,3 +153,15 @@ class CommentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView)
     serializer_class = CommentSerializer
     permission_classes = (AllowAny,)
     authentication_classes = [JWTAuthentication]
+
+# TAGS 
+class TagListAPIView(generics.ListCreateAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+    permission_classes = (AllowAny,)
+    authentication_classes = [JWTAuthentication]
+
+    def perform_create(self, serializer):
+        tag_name = self.request.data.get('name')  # Assuming the tag name is provided in the request data
+        slug = Tag.generate_unique_slug(tag_name)
+        serializer.save(slug=slug)
