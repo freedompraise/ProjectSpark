@@ -108,6 +108,20 @@ class IdeaDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (AllowAny,)
     authentication_classes = [JWTAuthentication]
 
+    def put(self, request, *args, **kwargs):
+        idea = self.get_object()
+        serializer = self.get_serializer(idea, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+    def patch(self, request, *args, **kwargs):
+        idea = self.get_object()
+        serializer = self.get_serializer(idea, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
 # CREATE COMMENTS
 class CommentListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = CommentSerializer

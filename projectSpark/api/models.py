@@ -57,7 +57,7 @@ class Idea(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    tags = models.ForeignKey('Tag', related_name='ideas', blank=True, null=True, on_delete=models.CASCADE)
+    tags = models.ManyToManyField('Tag', related_name='ideas', blank=True)
 
     def __str__(self):
         return self.title
