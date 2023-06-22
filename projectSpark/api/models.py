@@ -1,9 +1,9 @@
-from django.db import models
 from .manager import UserManager
 
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-
 from django.db import models
+from django.db import models
+from django.utils.text import slugify
 
 
 class User(AbstractBaseUser):
@@ -37,11 +37,14 @@ class User(AbstractBaseUser):
 
     def get_short_name(self):
         return self.username
+    
+    def set_password(self, password):
+        self.password = password
 
+    def check_password(self, password):
+        return self.password == password
     class Meta:
         app_label = 'api'
-
-
 
     def __str__(self):
         return self.username
@@ -54,6 +57,7 @@ class Idea(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    tags = models.ManyToManyField('Tag', related_name='ideas', blank=True)
 
     def __str__(self):
         return self.title
@@ -68,3 +72,19 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment on '{self.idea.title}' by {self.commenter.username}"
+
+class Tag(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(max_length=50, unique=True)
+    def __str__(self):
+        return self.name
+
+    @staticmethod
+    def generate_unique_slug(tag_name):
+        slug = slugify(tag_name)
+        unique_slug = slug
+        num = 1
+        while Tag.objects.filter(slug=unique_slug).exists():
+            unique_slug = f'{slug}-{num}'
+            num += 1
+        return unique_slug

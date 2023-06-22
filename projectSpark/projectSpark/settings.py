@@ -56,7 +56,6 @@ REST_FRAMEWORK = {
   }
 }
 
-AUTH_USER_MODEL = 'api.User'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -101,8 +100,20 @@ DATABASES = {
 
 AUTHENTICATION_BACKENDS = [
     'rest_framework_simplejwt.authentication.JWTAuthentication',
-    # Other authentication backends...
+    'django.contrib.auth.backends.ModelBackend'
 ]
+
+AUTH_USER_MODEL = 'api.User'
+
+# settings.py
+
+# ...
+
+SIMPLE_JWT = {
+    'SIGNING_KEY': 'projectSpark',
+    'ALGORITHM': 'HS256',
+    'AUTH_HEADER_TYPES': ('Bearer',),
+}
 
 
 # Password validation
