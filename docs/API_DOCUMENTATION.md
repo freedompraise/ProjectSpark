@@ -179,6 +179,37 @@ The following endpoints are available for performing CRUD operations on comments
 - Response: Returns a success message if the comment is deleted successfully.
 
 ## Tags
+
+### Create a Tag
+- URL: `/api/tags/`
+- Method: `POST`
+- Description: Create a new tag.
+- Request Body:
+  - `name` (string): The name of the tag.
+
+-Example Request:
+```http
+POST /api/tags/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+{
+  "name": "tag1"
+}
+```
+- Example Response:
+```http
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "tag1",
+  "created_at": "2021-01-01T00:00:00.000000Z",
+  "updated_at": "2021-01-01T00:00:00.000000Z"
+}
+```
+
 ### List Tags
 - URL: `/api/tags/`
 - Method: `GET`
