@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from .models import User, Idea, Comment, Tag
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from .models import User, Idea, Comment, Tag, IdeaRating
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -77,4 +76,9 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('id', 'idea', 'commenter', 'content', 'created_at', 'updated_at')
+
+class IdeaRatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IdeaRating
+        fields = ('id', 'idea', 'rater', 'rating')
 

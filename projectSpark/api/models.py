@@ -58,7 +58,7 @@ class Idea(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField('Tag', related_name='ideas', blank=True)
-    total_rating = models.IntegerField(default=0)
+    total_rating = models.IntegerField(default=0, blank=True)
 
     def __str__(self):
         return self.title
