@@ -181,7 +181,12 @@ class IdeaRatingCreateAPIView(generics.CreateAPIView):
         idea = Idea.objects.get(pk=idea_id)
         serializer.save(rater=self.request.user, idea=idea)
         idea.update_total_rating()
-        
+    
+    def perform_update(self, serializer):
+        serializer.save()
+        self.get_object().update_total_rating()
+       
+
 class IdeaRatingListAPIView(generics.ListAPIView):
     serializer_class = IdeaRatingSerializer
     permission_classes = (AllowAny,)
