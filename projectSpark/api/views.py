@@ -157,3 +157,13 @@ class TagListAPIView(generics.ListCreateAPIView):
         tag_name = self.request.data.get('name')  # Assuming the tag name is provided in the request data
         slug = Tag.generate_unique_slug(tag_name)
         serializer.save(slug=slug)
+
+class IdeaListByTagAPIView(generics.ListAPIView):
+    serializer_class = IdeaSerializer
+    permission_classes = (AllowAny,)
+    authentication_classes = [JWTAuthentication]
+
+    def get_queryset(self):
+        tag_slug = self.kwargs['tag_slug']
+        tag = Tag.objects.get(slug=tag_slug)
+        return Idea.objects.filter(tags=tag)
