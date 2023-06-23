@@ -14,12 +14,14 @@ from .serializers import (
     IdeaSerializer,
     CommentSerializer,
     TagSerializer,
+    IdeaRatingSerializer,
 )
 from .models import (
     User,
     Idea,
     Comment,
     Tag,
+    IdeaRating,
 )
 # django
 from django.contrib.auth import authenticate
@@ -167,3 +169,31 @@ class IdeaListByTagAPIView(generics.ListAPIView):
         tag_slug = self.kwargs['tag_slug']
         tag = Tag.objects.get(slug=tag_slug)
         return Idea.objects.filter(tags=tag)
+
+class IdeaRatingCreateAPIView(generics.CreateAPIView):
+    queryset = IdeaRating.objects.all()
+    serializer_class = IdeaRatingSerializer
+    permission_classes = (AllowAny,)
+    authentication_classes = [JWTAuthentication]
+
+    def perform_create(self, serializer):
+        idea_id = self.kwargs['idea_id']
+        idea = Idea.objects.get(pk=idea_id)
+        if self.request.user.is_authenticated:
+            serializer.save(rater=self.request.user, idea=idea)
+            idea.update_total_rating()
+        else:
+            return Response({'error': 'Authentication is required to rate an idea.'}, status=status.HTTP_401_UNAUTHORIZED)
+            
+    def perform_update(self, serializer):
+        serializer.save()
+        self.get_object().update_total_rating()
+       
+
+class IdeaRatingListAPIView(generics.ListAPIView):
+    serializer_class = IdeaRatingSerializer
+    permission_classes = (AllowAny,)
+
+    def get_queryset(self):
+        idea_id = self.kwargs['idea_id']
+        return IdeaRating.objects.filter(idea_id=idea_id)
