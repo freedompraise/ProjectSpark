@@ -180,7 +180,8 @@ class IdeaRatingCreateAPIView(generics.CreateAPIView):
         idea_id = self.kwargs['idea_id']
         idea = Idea.objects.get(pk=idea_id)
         serializer.save(rater=self.request.user, idea=idea)
-
+        idea.update_total_rating()
+        
 class IdeaRatingListAPIView(generics.ListAPIView):
     serializer_class = IdeaRatingSerializer
     permission_classes = (AllowAny,)

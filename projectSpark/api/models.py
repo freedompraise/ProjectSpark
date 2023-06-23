@@ -95,6 +95,12 @@ class IdeaRating(models.Model):
     idea = models.ForeignKey(Idea, on_delete=models.CASCADE)
     rater = models.ForeignKey(User, on_delete=models.CASCADE)
     rating = models.IntegerField()
-    
+
+    def update_total_rating(self):
+        upvotes = self.idea.idearating_set.filter(rating=1).count()
+        downvotes = self.idea.idearating_set.filter(rating=-1).count()
+        self.idea.total_rating = upvotes - downvotes
+        self.idea.save()
+        
     class Meta:
         unique_together = ('idea', 'rater')
