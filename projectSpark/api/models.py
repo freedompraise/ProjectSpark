@@ -29,6 +29,9 @@ class User(AbstractBaseUser):
     def is_active(self):
         return True
 
+    def is_staff(self):
+        return False
+
     def get_full_name(self):
         return self.username
 
