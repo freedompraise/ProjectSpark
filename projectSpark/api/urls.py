@@ -14,5 +14,5 @@ urlpatterns = [
     path('ideas/<int:idea_id>/comments/<int:pk>/', CommentRetrieveUpdateDestroyAPIView.as_view(), name='comment-detail'),
     path('tags/',TagListAPIView.as_view(), name = 'tag-list' ),
     path('ideas/<slug:tag_slug>/',IdeaListByTagAPIView.as_view(), name = 'idea-list-by-tag'),
-
+    path('ideas/<int:idea_id>/ratings/',IdeaRatingCreateAPIView.as_view(), name = 'idea-rating-create'),
 ]
