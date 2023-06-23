@@ -220,3 +220,47 @@ Content-Type: application/json
 GET /api/tags/
 Authorization: Bearer <access_token>
 ```
+
+## Ratings
+
+### Create a Rating
+- Endpoint URL: `/api/ideas/{idea_id}/ratings/`
+- Method: `POST`
+- Description: Create a new rating for a specific idea.
+- Request Body:
+  - `rating` (integer): The rating value (-1 to 1) for the idea.
+- Example Request:
+```http
+POST /api/ideas/1/ratings/
+Content-Type: application/json
+ {
+  "rating": 1
+ }
+```
+- Example Response:
+```http
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+{
+  "id": 1,
+  "rating": 1,
+  "idea_id": 1,
+  "rater_id": 1,
+  "created_at": "2021-01-01T00:00:00.000000Z",
+  "updated_at": "2021-01-01T00:00:00.000000Z"
+}
+```
+
+## Error Responses
+The API returns the following error responses:
+- Status Code: 400 Bad Request
+- Status Code: 401 Unauthorized
+- Status Code: 404 Not Found
+- Status Code: 500 Internal Server Error
+
+## Troubleshooting
+
+If you encounter any issues or have questions about the API, please reach out to our support team at dikepraise119@gmail.com
+
+
