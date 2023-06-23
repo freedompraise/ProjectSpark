@@ -24,10 +24,10 @@ Authorization: Bearer <token>
   }
   ```
   - Example Response:
-  ```http
-HTTP/1.1 201 Created
-Content-Type: application/json
 
+  ```http
+  HTTP/1.1 201 Created
+Content-Type: application/json
 {
   "access": "<access_token>",
   "refresh": "<refresh_token>",
@@ -35,7 +35,6 @@ Content-Type: application/json
     "email": "user@example.com"
   }
 }
-  ```
 
 ### User Login
 - URL: `/api/login/`
@@ -66,7 +65,7 @@ The following endpoints are available for performing CRUD operations on ideas.
   - `description` (string): The description of the idea.
   - `tags` (optional): List of tags associated with the idea.
 
--Example Request: 
+- Example Request: 
 ```http
 POST /api/ideas/
 Content-Type: application/json
