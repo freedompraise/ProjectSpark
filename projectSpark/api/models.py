@@ -67,8 +67,27 @@ class Idea(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField('Tag', related_name='ideas', blank=True)
-    total_rating = models.IntegerField(default=0, blank=True)
-    slug = models.SlugField(max_length=50, unique=True, blank=True)
+    total_rating = models.IntegerField(default=0)
+    average_rating = models.DecimalField(max_digits=3, decimal_places=1, default=0)
+    slug = models.SlugField(max_length=50, 
+                            # unique=True, 
+                            blank=True)
+    def update_total_rating(self):
+        if self.total_rating.exists():
+            self.total_rating = self.ratings.aggregate(Sum('rating'))['rating__sum']
+        else:
+            self.total_rating = 0
+
+    def update_average_rating(self):
+        if self.total_rating.exists():
+            self.average_rating = self.total_rating / self.ratings.count()
+        else:
+            self.average_rating = 0
+        self.save()
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Idea, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -104,13 +123,7 @@ class Tag(models.Model):
 class IdeaRating(models.Model):
     idea = models.ForeignKey(Idea, on_delete=models.CASCADE)
     rater = models.ForeignKey(User, on_delete=models.CASCADE)
-    rating = models.IntegerField()
+    value = models.SmallIntegerField(choices=[(1, 'Upvote'), (-1, 'Downvote'), (0, 'Neutral')], default=0)
 
-    def update_total_rating(self):
-        upvotes = self.idea.idearating_set.filter(rating=1).count()
-        downvotes = self.idea.idearating_set.filter(rating=-1).count()
-        self.idea.total_rating = upvotes - downvotes
-        self.idea.save()
-        
     class Meta:
         unique_together = ('idea', 'rater')

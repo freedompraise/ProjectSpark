@@ -80,5 +80,5 @@ class CommentSerializer(serializers.ModelSerializer):
 class IdeaRatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = IdeaRating
-        fields = ('id', 'idea', 'rater', 'rating')
+        fields = ('id', 'idea', 'rater', 'value')
 
