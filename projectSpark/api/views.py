@@ -14,12 +14,14 @@ from .serializers import (
     IdeaSerializer,
     CommentSerializer,
     TagSerializer,
+    IdeaRatingSerializer,
 )
 from .models import (
     User,
     Idea,
     Comment,
     Tag,
+    IdeaRating,
 )
 # django
 from django.contrib.auth import authenticate
@@ -167,3 +169,22 @@ class IdeaListByTagAPIView(generics.ListAPIView):
         tag_slug = self.kwargs['tag_slug']
         tag = Tag.objects.get(slug=tag_slug)
         return Idea.objects.filter(tags=tag)
+
+class IdeaRatingCreateAPIView(generics.CreateAPIView):
+    queryset = IdeaRating.objects.all()
+    serializer_class = IdeaRatingSerializer
+    permission_classes = (AllowAny,)
+    authentication_classes = [JWTAuthentication]
+
+    def perform_create(self, serializer):
+        idea_id = self.kwargs['idea_id']
+        idea = Idea.objects.get(pk=idea_id)
+        serializer.save(rater=self.request.user, idea=idea)
+
+class IdeaRatingListAPIView(generics.ListAPIView):
+    serializer_class = IdeaRatingSerializer
+    permission_classes = (AllowAny,)
+
+    def get_queryset(self):
+        idea_id = self.kwargs['idea_id']
+        return IdeaRating.objects.filter(idea_id=idea_id)
