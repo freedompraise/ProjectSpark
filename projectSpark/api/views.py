@@ -179,9 +179,12 @@ class IdeaRatingCreateAPIView(generics.CreateAPIView):
     def perform_create(self, serializer):
         idea_id = self.kwargs['idea_id']
         idea = Idea.objects.get(pk=idea_id)
-        serializer.save(rater=self.request.user, idea=idea)
-        idea.update_total_rating()
-    
+        if self.request.user.is_authenticated:
+            serializer.save(rater=self.request.user, idea=idea)
+            idea.update_total_rating()
+        else:
+            return Response({'error': 'Authentication is required to rate an idea.'}, status=status.HTTP_401_UNAUTHORIZED)
+            
     def perform_update(self, serializer):
         serializer.save()
         self.get_object().update_total_rating()
