@@ -1,11 +1,9 @@
 # projectSpark-api API Documentation
 
 ## Authentication
-Before making requests to the projectSpark-api, you need to authenticate with a valid JWT token. To obtain the token, make a `POST` request to the `/api/auth` endpoint with your credentials (username and password). The API will respond with a token that you can include in the `Authorization` header of subsequent requests as follows:
+The ProjectSpark API uses JSON Web Token (JWT) for authentication. To access the authenticated endpoints, you need to include the access token in the `Authorization` header of your requests as follows:
 Authorization: Bearer <token>
 
-
-## Endpoints
 
 ### User Registration
 - URL: `/api/register/`
@@ -15,16 +13,49 @@ Authorization: Bearer <token>
   - `username` (string): The username of the user.
   - `email` (string): The email address of the user.
   - `password` (string): The password of the user.
-- Response: Returns the user details if registration is successful, or an error message if registration fails.
+  - Example Request:
+  ```http
+  POST /api/users/register/
+  Content-Type: application/json
+
+  {
+    "email": "user@example.com",
+    "password": "password123"
+  }
+  ```
+  - Example Response:
+  ```http
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+{
+  "access": "<access_token>",
+  "refresh": "<refresh_token>",
+  "user": {
+    "email": "user@example.com"
+  }
+}
+  ```
 
 ### User Login
 - URL: `/api/login/`
 - Method: `POST`
-- Description: Authenticate and obtain a JWT token.
+- Description: Log in an existing user.
 - Request Body:
-  - `username` (string): The username of the user.
+  - `email` (string): The email of the user.
   - `password` (string): The password of the user.
-- Response: Returns a JWT token if authentication is successful, or an error message if authentication fails.
+- Example Response: 
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "message": "Login successful"
+}
+```
+
+## Ideas
+The following endpoints are available for performing CRUD operations on ideas.
 
 ### Create Idea
 - URL: `/api/ideas/`
@@ -33,13 +64,72 @@ Authorization: Bearer <token>
 - Request Body:
   - `title` (string): The title of the idea.
   - `description` (string): The description of the idea.
-- Response: Returns the created idea details.
+  - `tags` (optional): List of tags associated with the idea.
 
-### Get Idea
-- URL: `/api/ideas/{id}/`
-- Method: `GET`
-- Description: Retrieve details of a specific idea.
-- Response: Returns the details of the specified idea.
+-Example Request: 
+```http
+POST /api/ideas/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+{
+  "title": "My Idea",
+  "description": "This is my idea",
+  "tags": ["tag1", "tag2"]
+}
+```
+- Example Response:
+```http
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+{
+  "id": 1,
+  "title": "My Idea",
+  "description": "This is my idea",
+  "tags": ["tag1", "tag2"]
+  "created_by": "user_id>",
+  "created_at": "2021-01-01T00:00:00.000000Z",
+  "updated_at": "2021-01-01T00:00:00.000000Z"
+}
+```
+
+### List Ideas
+- URL: `/api/ideas/`
+- Method: GET
+- Description: Get a list of all ideas.
+- Authentication: Required
+- Example Request:
+```http
+GET /api/ideas/
+Authorization: Bearer <access_token>
+```
+- Example Response:
+```http
+HTTP/1.1 200 OK
+Content-Type:application/json
+
+[
+  {
+    "id": 1,
+    "title": "My Idea 1",
+    "description": "This is my idea 1",
+    "tags": ["tag1", "tag2"]
+    "created_by": "user_id>",
+    "created_at": "2021-01-01T00:00:00.000000Z",
+    "updated_at": "2021-01-01T00:00:00.000000Z"
+  },
+  {
+    "id": 2,
+    "title": "My Idea 2",
+    "description": "This is my idea 2",
+    "tags": ["tag1", "tag2"]
+    "created_by": "user_id>",
+    "created_at": "2021-01-01T00:00:00.000000Z",
+    "updated_at": "2021-01-01T00:00:00.000000Z"
+  }
+]
+```
 
 ### Update Idea
 - URL: `/api/ideas/{id}/`
@@ -48,6 +138,7 @@ Authorization: Bearer <token>
 - Request Body:
   - `title` (string): The updated title of the idea.
   - `description` (string): The updated description of the idea.
+  - `tags` (optional): List of updated tags associated with the idea.
 - Response: Returns the updated idea details.
 
 ### Delete Idea
@@ -55,6 +146,9 @@ Authorization: Bearer <token>
 - Method: `DELETE`
 - Description: Delete a specific idea.
 - Response: Returns a success message if the idea is deleted successfully.
+
+## Comments
+The following endpoints are available for performing CRUD operations on comments.
 
 ### Create Comment
 - URL: `/api/ideas/{idea_id}/comments/`
@@ -84,3 +178,14 @@ Authorization: Bearer <token>
 - Description: Delete a specific comment.
 - Response: Returns a success message if the comment is deleted successfully.
 
+## Tags
+### List Tags
+- URL: `/api/tags/`
+- Method: `GET`
+- Description: Get a list of all tags.
+- Authentication: Required
+- Example Request:
+```http
+GET /api/tags/
+Authorization: Bearer <access_token>
+```
