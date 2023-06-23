@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     UserRegistrationView, IdeaListAPIView, 
     IdeaDetailAPIView, CommentListCreateAPIView, CommentRetrieveUpdateDestroyAPIView, UserLoginView, 
-    TagListAPIView, IdeaListByTagAPIView
+    TagListAPIView, IdeaListByTagAPIView, IdeaRatingCreateAPIView, IdeaRatingListAPIView
 )
 
 urlpatterns = [
@@ -14,4 +14,5 @@ urlpatterns = [
     path('ideas/<int:idea_id>/comments/<int:pk>/', CommentRetrieveUpdateDestroyAPIView.as_view(), name='comment-detail'),
     path('tags/',TagListAPIView.as_view(), name = 'tag-list' ),
     path('ideas/<slug:tag_slug>/',IdeaListByTagAPIView.as_view(), name = 'idea-list-by-tag'),
+
 ]
