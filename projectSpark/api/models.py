@@ -32,6 +32,12 @@ class User(AbstractBaseUser):
     def is_staff(self):
         return False
 
+    def has_module_perms(self, app_label):
+        return True
+
+    def has_perm(self, perm, obj=None):
+        return True
+
     def get_full_name(self):
         return self.username
 
@@ -62,6 +68,7 @@ class Idea(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField('Tag', related_name='ideas', blank=True)
     total_rating = models.IntegerField(default=0, blank=True)
+    slug = models.SlugField(max_length=50, unique=True, blank=True)
 
     def __str__(self):
         return self.title
