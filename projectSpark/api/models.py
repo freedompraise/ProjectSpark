@@ -58,6 +58,7 @@ class Idea(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     tags = models.ManyToManyField('Tag', related_name='ideas', blank=True)
+    total_rating = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
@@ -88,3 +89,12 @@ class Tag(models.Model):
             unique_slug = f'{slug}-{num}'
             num += 1
         return unique_slug
+
+
+class IdeaRating(models.Model):
+    idea = models.ForeignKey(Idea, on_delete=models.CASCADE)
+    rater = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.IntegerField()
+    
+    class Meta:
+        unique_together = ('idea', 'rater')
