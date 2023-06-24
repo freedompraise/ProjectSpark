@@ -15,6 +15,7 @@ from .serializers import (
     CommentSerializer,
     TagSerializer,
     IdeaRatingSerializer,
+    NotificationSerializer,
 )
 from .models import (
     User,
@@ -197,3 +198,13 @@ class IdeaRatingListAPIView(generics.ListAPIView):
     def get_queryset(self):
         idea_id = self.kwargs['idea_id']
         return IdeaRating.objects.filter(idea_id=idea_id)
+
+
+class NotificationListAPIView(generics.ListAPIView):
+    serializer_class = NotificationSerializer
+    permission_classes = (AllowAny,)
+    authentication_classes = [JWTAuthentication]
+
+    def get_queryset(self):
+        user_id = self.request.user.id
+        return Notification.objects.filter(user_id=user_id)

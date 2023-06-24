@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Idea, Comment, Tag, IdeaRating
+from .models import User, Idea, Comment, Tag, IdeaRating, Notification
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -81,4 +81,9 @@ class IdeaRatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = IdeaRating
         fields = ('id', 'idea', 'rater', 'value')
+
+class NotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = ('id', 'idea', 'user', 'message', 'is_read', 'created_at')
 
