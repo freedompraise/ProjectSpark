@@ -16,5 +16,5 @@ urlpatterns = [
     path('tags/',TagListAPIView.as_view(), name = 'tag-list' ),
     path('ideas/<slug:tag_slug>/',IdeaListByTagAPIView.as_view(), name = 'idea-list-by-tag'),
     path('ideas/<int:idea_id>/ratings/',IdeaRatingCreateAPIView.as_view(), name = 'idea-rating-create'),
-    path('dashboard/', views.UserDashboardAPIView.as_view(), name = 'user-dashboard')
+    path('dashboard/', UserDashboardAPIView.as_view(), name = 'user-dashboard')
 ]
