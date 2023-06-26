@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Idea, Comment, Tag, IdeaRating, Notification, Progress
+from .models import User, Idea, Comment, Tag, IdeaRating, Notification, Progress, Feedback
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -93,4 +93,12 @@ class ProgressSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Progress
+        fields = '__all__'
+
+
+class FeedbackSerializer(serializers.ModelSerializer):
+    commenter = serializers.ReadOnlyField(source = 'commenter.username')
+
+    class Meta:
+        model = Feedback
         fields = '__all__'

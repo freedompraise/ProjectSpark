@@ -147,3 +147,13 @@ class Progress(models.Model):
 
     def __str__(self):
         return f'Progress #{self.pk}'
+
+class Feedback(models.Model):
+    idea = models.ForeignKey(Idea, on_delete=models.CASCADE, related_name="feedback")
+    commenter = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Feedback #{self.pk}'
+    
