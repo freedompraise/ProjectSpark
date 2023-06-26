@@ -36,6 +36,7 @@ Content-Type: application/json
   }
 }
 ```
+
 ### User Login
 - URL: `/api/login/`
 - Method: `POST`
