@@ -35,7 +35,7 @@ Content-Type: application/json
     "email": "user@example.com"
   }
 }
-
+```
 ### User Login
 - URL: `/api/login/`
 - Method: `POST`
