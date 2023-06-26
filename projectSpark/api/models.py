@@ -139,3 +139,11 @@ class Notification(models.Model):
 
     class Meta:
         ordering = ('-created_at',)
+
+class Progress(models.Model):
+    idea = models.ForeignKey(Idea, on_delete=models.CASCADE, related_name="progress")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)    
+    progress = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f'Progress #{self.pk}'
