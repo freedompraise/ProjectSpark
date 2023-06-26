@@ -3,7 +3,7 @@
 This is the backend API for ProjectSpark, a software tool that helps developers efficiently journal their ideas and aids in the early stages of brainstorming and project management.
 
 ## Table of Contents
-- [Introduction](#introduction)
+- [Getting Started](#getting-started)
 - [Installation](#installation)
 - [Usage](#usage)
 - [API Documentation](#api-documentation)
@@ -19,6 +19,7 @@ These instructions will help you get the project up and running on your local ma
 - Python (version 3.10)
 - Django (version 4.2.2)
 - Django REST Framework (version 3.14.0)
+- JWt for authentication (version 1.7.1)
 
 ### Installation
 
