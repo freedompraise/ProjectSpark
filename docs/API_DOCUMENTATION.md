@@ -22,7 +22,7 @@ Authorization: Bearer <token>
     "email": "user@example.com",
     "password": "password123"
   }
- 
+ ```
   - Example Response:
 
   ```http
