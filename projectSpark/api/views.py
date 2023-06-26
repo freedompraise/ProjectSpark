@@ -214,7 +214,9 @@ class NotificationListAPIView(generics.ListAPIView):
 
 class UserDashboardAPIView(generics.RetrieveAPIView):
     serializer_class = UserSerializer
-
+    permission_classes = [AllowAny,]
+    authentication_classes = [JWTAuthentication]
+    
     def get_object(self):
         user = self.request.user
         return user
