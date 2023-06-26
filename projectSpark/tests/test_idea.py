@@ -27,7 +27,7 @@ class ProjectSparkAPITestCase(APITestCase):
         )
     def test_create_idea(self):
         url = reverse('idea-list')
-        response = self.client.post(url, data=self.idea.id)
+        response = self.client.post(url, args=[self.idea.id])
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_idea_list(self):
