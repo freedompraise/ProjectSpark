@@ -16,6 +16,8 @@ from .serializers import (
     TagSerializer,
     IdeaRatingSerializer,
     NotificationSerializer,
+    ProgressSerializer,
+    FeedbackSerializer,
 )
 from .models import (
     User,
@@ -208,3 +210,30 @@ class NotificationListAPIView(generics.ListAPIView):
     def get_queryset(self):
         user_id = self.request.user.id
         return Notification.objects.filter(user_id=user_id)
+
+
+class UserDashboardAPIView(generics.RetrieveAPIView):
+    serializer_class = UserSerializer
+
+    def get_object(self):
+        user = self.request.user
+        return user
+
+    def retrieve(self, request, *args, **kwargs):
+        user = self.get_object()
+        user_serializer = self.get_serializer(user)
+        ideas = Idea.objects.filter(created_by=user)
+        idea_serializer = IdeaSerializer(ideas, many=True)
+        feedbacks = Feedback.objects.filter(commenter=user)
+        feedback_serializer = FeedbackSerializer(feedbacks, many=True)
+        progress = Progress.objects.filter(user=user).first()
+        progress_serializer = ProgressSerializer(progress)
+
+        data = {
+            'user': user_serializer.data,
+            'ideas': idea_serializer.data,
+            'feedbacks': feedback_serializer.data,
+            'progress': progress_serializer.data,
+        }
+
+        return Response(data)
