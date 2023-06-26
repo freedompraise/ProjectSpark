@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Idea, Comment, Tag, IdeaRating, Notification
+from .models import User, Idea, Comment, Tag, IdeaRating, Notification, Progress
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -87,3 +87,10 @@ class NotificationSerializer(serializers.ModelSerializer):
         model = Notification
         fields = ('id', 'idea', 'user', 'message', 'is_read', 'created_at')
 
+
+class ProgressSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source = 'user.username') # might use email instead
+
+    class Meta:
+        model = Progress
+        fields = '__all__'
