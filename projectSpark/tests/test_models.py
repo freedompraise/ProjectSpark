@@ -11,13 +11,6 @@ class ProjectSparkAPITestCase(APITestCase):
             email='test@example.com',
             password='testpassword',
         )
-        self.idea_data = {
-                'title' : 'Test Idea',
-                'description' : 'This is a test idea.',
-                
-                'created_by' : self.user.id
-            }
-
         # Create a test idea
         self.idea = Idea.objects.create(
             title='Test Idea',
