@@ -75,13 +75,13 @@ Please refer to the [API Documentation](/docs/API_DOCUMENTATION.md) file for det
 
 ## Contributing
 Contributions are welcome! If you would like to contribute to **projectSpark-api**, please follow these steps:
-
+s
 1. Fork the repository.
 2. Create a new branch for your feature/bug fix.
 3. Commit your changes and push them to your branch.
 4. Submit a pull request.
 
 ## License
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](/LICENSE).
 
 
