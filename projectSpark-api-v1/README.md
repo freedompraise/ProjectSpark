@@ -74,12 +74,7 @@ Make sure to refer to the [API Documentation](#api-documentation) section for de
 Please refer to the [API Documentation](/docs/API_DOCUMENTATION.md) file for detailed information about the **projectSpark-api** endpoints, request/response formats, and authentication requirements.
 
 ## Contributing
-Contributions are welcome! If you would like to contribute to **projectSpark-api**, please follow these steps:
-s
-1. Fork the repository.
-2. Create a new branch for your feature/bug fix.
-3. Commit your changes and push them to your branch.
-4. Submit a pull request.
+Contributions are welcome! If you would like to contribute to **projectSpark-api**, please follow the in [CONTRIBUTING.md](/docs/CONTRIBUTING.md) file for detailed instructions.
 
 ## License
 This project is licensed under the [MIT License](/LICENSE).
