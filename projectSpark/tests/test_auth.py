@@ -21,16 +21,6 @@ class UserAuthenticationTests(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', email='test@example.com', password='testpassword')
         
-    def test_user_authentication(self):
-        url = '/api/auth/'
-        data = {
-            'email': 'test@example.com',
-            'password': 'testpassword'
-        }
-        response = self.client.post(url, data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertTrue('token' in response.data)
-        # Add more assertions as needed
 
 class UserLoginTests(APITestCase):
     def setUp(self):

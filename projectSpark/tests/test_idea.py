@@ -9,13 +9,13 @@ class ProjectSparkAPITestCase(APITestCase):
         self.user = User.objects.create_user(
             username='testuser',
             email='test@example.com',
-            password='testpassword'
+            password='testpassword',
         )
-
         # Create a test idea
         self.idea = Idea.objects.create(
             title='Test Idea',
             description='This is a test idea',
+            # tags = ['tag1', 'tag2'],
             created_by=self.user
         )
 
@@ -25,6 +25,10 @@ class ProjectSparkAPITestCase(APITestCase):
             commenter=self.user,
             content='This is a test comment'
         )
+    def test_create_idea(self):
+        url = reverse('idea-list')
+        response = self.client.post(url, args=[self.idea.id])
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_idea_list(self):
         url = reverse('idea-list')
@@ -66,5 +70,6 @@ class ProjectSparkAPITestCase(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Comment.objects.count(), 0)
+
 
  
