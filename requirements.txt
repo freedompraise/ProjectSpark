@@ -2,5 +2,3 @@ Django==4.2.2
 djangorestframework==3.14.0
 rest_framework_simplejwt==0.0.2
 drf-yasg==1.21.6
-
-
