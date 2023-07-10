@@ -52,12 +52,7 @@ Project Spark is built using the following technologies:
 - Authentication: JWT (JSON Web Tokens)
 
 ## Contributing
-We welcome contributions from the community to help improve Project Spark. To contribute, please follow these guidelines:
-- Fork the repository and create a new branch for your contribution.
-- Make your changes and ensure they adhere to the coding standards and project guidelines.
-- Write tests to cover any new functionality or changes.
-- Submit a pull request, providing a detailed description of your changes and any relevant information.
-
+We welcome contributions from the community to help improve Project Spark. To contribute, please follow the guidelines outlined in the [Contributing](/docs/CONTRIBUTING.md) document.
 ## License
 This project is licensed under the [MIT License](LICENSE).
 
