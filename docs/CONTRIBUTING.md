@@ -1,6 +1,6 @@
-# Contributing to projectSpark-api
+# Contributing to projectSpark
 
-Thank you for your interest in contributing to projectSpark-api! We welcome contributions from the community to help make this project even better. Before getting started, please take a moment to review the guidelines for contributing.
+Thank you for your interest in contributing to projectSpark! We welcome contributions from the community to help make this project even better. Before getting started, please take a moment to review the guidelines for contributing.
 
 ## Getting Started
 
