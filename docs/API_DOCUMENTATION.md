@@ -22,7 +22,7 @@ Authorization: Bearer <token>
     "email": "user@example.com",
     "password": "password123"
   }
-  ```
+ ```
   - Example Response:
 
   ```http
@@ -35,6 +35,7 @@ Content-Type: application/json
     "email": "user@example.com"
   }
 }
+```
 
 ### User Login
 - URL: `/api/login/`
