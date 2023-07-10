@@ -12,7 +12,7 @@ To contribute to projectSpark-api, follow these steps:
 4. Make the necessary changes and additions to the codebase.
 5. Commit your changes with descriptive commit messages.
 6. Push your changes to your forked repository.
-7. Submit a pull request from your branch to the main projectSpark-api repository.
+7. Submit a pull request from your branch to the main projectSpark repository.
 
 ## Contribution Guidelines
 
@@ -46,4 +46,4 @@ Please note that by contributing to projectSpark-api, you agree to abide by the 
 
 If you need any assistance or have questions related to contributing, feel free to reach out to the project maintainers or open an issue on the GitHub repository.
 
-We appreciate your time and effort in contributing to projectSpark-api. Together, let's create something amazing!
+We appreciate your time and effort in contributing to projectSpark. Together, let's create something amazing!
