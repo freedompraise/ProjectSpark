@@ -15,7 +15,7 @@ class ProjectSparkAPITestCase(APITestCase):
         self.idea = Idea.objects.create(
             title='Test Idea',
             description='This is a test idea',
-            tags = ['tag1', 'tag2'],
+            # tags = ['tag1', 'tag2'],
             created_by=self.user
         )
 
