@@ -6,9 +6,14 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  DEBUG: False
+  SECRET_KEY: "Not Applicable"
+  ALLOWED_HOSTS: "127.0.0.1 localhost"
+  SITE_ID: 1
+
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -27,4 +32,7 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
+        cd projectSpark-api-v1
+        python3 -m venv venv projectSpark/venv
+        source projectSpark/venv/bin/activate
         python manage.py test
