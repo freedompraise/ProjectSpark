@@ -26,13 +26,15 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
+
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
+        python3 -m venv venv projectSpark-api-v1/venv
+        source projectSpark-api-v1/venv/bin/activate
         pip install -r requirements.txt
+
     - name: Run Tests
       run: |
-        cd projectSpark-api-v1
-        python3 -m venv venv projectSpark/venv
-        source projectSpark/venv/bin/activate
+        source projectSpark-api-v1/venv/bin/activate
         python manage.py test
