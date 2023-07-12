@@ -37,4 +37,4 @@ jobs:
     - name: Run Tests
       run: |
         source projectSpark-api-v1/venv/bin/activate
-        python manage.py test
+        python projectSpark-api-v1/manage.py test
