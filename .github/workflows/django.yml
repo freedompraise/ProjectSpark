@@ -22,6 +22,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: update-system-dependencies
+      run: | 
+        sudo apt-get update -y
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
@@ -39,4 +44,4 @@ jobs:
     - name: Run Tests
       run: |
         source projectSpark-api-v1/venv/bin/activate
-        python projectSpark-api-v1/manage.py test
+        python3 projectSpark-api-v1/manage.py test
