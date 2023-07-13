@@ -9,8 +9,8 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-import datetime
 from pathlib import Path
+
 # from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 # from django.utils.encoding import smart_str
 # django.utils.encoding.smart_text = smart_str
@@ -30,10 +30,9 @@ SECRET_KEY = "django-insecure-)&82j+txs4a*v(os#=xu=m8qfz4-$!x=hgim_(q7dn!a7$j2gw
 DEBUG = True
 
 ALLOWED_HOSTS = [
- 'localhost',
- '127.0.0.1',
+    "localhost",
+    "127.0.0.1",
 ]
-
 
 
 # Application definition
@@ -45,16 +44,16 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'rest_framework',
-    'rest_framework_simplejwt',
-    'api',
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "api",
     # 'drf_yasg'
 ]
 
 REST_FRAMEWORK = {
-  'DEFAULT_AUTHENTICATION_CLASSES': {
-    'rest_framework_simplejwt.authentication.JWTAuthentication'
-  }
+    "DEFAULT_AUTHENTICATION_CLASSES": {
+        "rest_framework_simplejwt.authentication.JWTAuthentication"
+    }
 }
 
 
@@ -100,20 +99,20 @@ DATABASES = {
 }
 
 AUTHENTICATION_BACKENDS = [
-    'rest_framework_simplejwt.authentication.JWTAuthentication',
-    'django.contrib.auth.backends.ModelBackend'
+    "rest_framework_simplejwt.authentication.JWTAuthentication",
+    "django.contrib.auth.backends.ModelBackend",
 ]
 
-AUTH_USER_MODEL = 'api.User'
+AUTH_USER_MODEL = "api.User"
 
 # settings.py
 
 # ...
 
 SIMPLE_JWT = {
-    'SIGNING_KEY': 'projectSpark',
-    'ALGORITHM': 'HS256',
-    'AUTH_HEADER_TYPES': ('Bearer',),
+    "SIGNING_KEY": "projectSpark",
+    "ALGORITHM": "HS256",
+    "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
 

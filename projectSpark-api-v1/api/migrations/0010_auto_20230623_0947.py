@@ -4,19 +4,20 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('api', '0009_idea_aveerage_rating'),
+        ("api", "0009_idea_aveerage_rating"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='idearating',
-            name='rating',
+            model_name="idearating",
+            name="rating",
         ),
         migrations.AddField(
-            model_name='idearating',
-            name='value',
-            field=models.SmallIntegerField(choices=[(1, 'Upvote'), (-1, 'Downvote'), (0, 'Neutral')], default=0),
+            model_name="idearating",
+            name="value",
+            field=models.SmallIntegerField(
+                choices=[(1, "Upvote"), (-1, "Downvote"), (0, "Neutral")], default=0
+            ),
         ),
     ]

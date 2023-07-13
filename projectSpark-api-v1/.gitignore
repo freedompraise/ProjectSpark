@@ -1,11 +1,5 @@
 venv
 db.sqlite3
-projectSpark/projectSpark/__pycache__/wsgi.cpython-310.pyc
-projectSpark/projectSpark/__pycache__/settings.cpython-310.pyc
-projectSpark/api/__pycache__/urls.cpython-310.pyc
-projectSpark/api/__pycache__/views.cpython-310.pyc
-projectSpark/api/__pycache__/models.cpython-310.pyc
-projectSpark/api/__pycache__/tests.cpython-310.pyc
-projectSpark/tests/__pycache__/test_models.cpython-310.pyc
-projectSpark/api/__pycache__/serializers.cpython-310.pyc
-projectSpark/tests/__pycache__/test_auth.cpython-310.pyc
+projectSpark/projectSpark/__pycache__
+projectSpark/api/__pycache__
+projectSpark/tests/__pycache__/

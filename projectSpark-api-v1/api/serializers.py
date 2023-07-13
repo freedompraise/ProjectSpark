@@ -1,14 +1,24 @@
 from rest_framework import serializers
-from .models import User, Idea, Comment, Tag, IdeaRating, Notification, Progress, Feedback
+from .models import (
+    User,
+    Idea,
+    Comment,
+    Tag,
+    IdeaRating,
+    Notification,
+    Progress,
+    Feedback,
+)
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password', 'created_at', 'updated_at')
+        fields = ("id", "username", "email", "password", "created_at", "updated_at")
 
     def create(self, validated_data):
-        user = User(email=validated_data['email'], username=validated_data['username'])
-        password = validated_data['password']
+        user = User(email=validated_data["email"], username=validated_data["username"])
+        password = validated_data["password"]
         user.set_password(password)
         user.save()
         return user
@@ -17,22 +27,28 @@ class UserSerializer(serializers.ModelSerializer):
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ('id', 'name', 'ideas')
+        fields = ("id", "name", "ideas")
+
 
 class IdeaSerializer(serializers.ModelSerializer):
     tags = serializers.SlugRelatedField(
-        queryset=Tag.objects.all(),
-        slug_field='name',
-        many=True,
-        required=False
+        queryset=Tag.objects.all(), slug_field="name", many=True, required=False
     )
 
     class Meta:
         model = Idea
-        fields = ('id', 'title', 'description', 'tags', 'created_by', 'created_at', 'updated_at')
+        fields = (
+            "id",
+            "title",
+            "description",
+            "tags",
+            "created_by",
+            "created_at",
+            "updated_at",
+        )
 
     def create(self, validated_data):
-        tags_data = validated_data.pop('tags', [])
+        tags_data = validated_data.pop("tags", [])
         idea = Idea.objects.create(**validated_data)
 
         for tag_name in tags_data:
@@ -47,11 +63,11 @@ class IdeaSerializer(serializers.ModelSerializer):
             return self.create(validated_data)
 
         # Update the idea fields
-        instance.title = validated_data.get('title', instance.title)
-        instance.description = validated_data.get('description', instance.description)
+        instance.title = validated_data.get("title", instance.title)
+        instance.description = validated_data.get("description", instance.description)
 
         # Update the idea tags
-        tags_data = validated_data.get('tags')
+        tags_data = validated_data.get("tags")
         if tags_data is not None:
             instance.tags.clear()  # Clear existing tags
 
@@ -64,41 +80,43 @@ class IdeaSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        tags = representation.pop('tags')
+        tags = representation.pop("tags")
         if tags is not None:
             if not isinstance(tags, list):
                 tags = [tags]
-            representation['tags'] = [tag for tag in tags]
+            representation["tags"] = [tag for tag in tags]
         return representation
 
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ('id', 'idea', 'commenter', 'content', 'created_at', 'updated_at')
+        fields = ("id", "idea", "commenter", "content", "created_at", "updated_at")
+
 
 class IdeaRatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = IdeaRating
-        fields = ('id', 'idea', 'rater', 'value')
+        fields = ("id", "idea", "rater", "value")
+
 
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
-        fields = ('id', 'idea', 'user', 'message', 'is_read', 'created_at')
+        fields = ("id", "idea", "user", "message", "is_read", "created_at")
 
 
 class ProgressSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField(source = 'user.username') # might use email instead
+    user = serializers.ReadOnlyField(source="user.username")  # might use email instead
 
     class Meta:
         model = Progress
-        fields = '__all__'
+        fields = "__all__"
 
 
 class FeedbackSerializer(serializers.ModelSerializer):
-    commenter = serializers.ReadOnlyField(source = 'commenter.username')
+    commenter = serializers.ReadOnlyField(source="commenter.username")
 
     class Meta:
         model = Feedback
-        fields = '__all__'
+        fields = "__all__"
