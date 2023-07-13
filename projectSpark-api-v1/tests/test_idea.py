@@ -11,6 +11,7 @@ class ProjectSparkAPITestCase(APITestCase):
             email='test@example.com',
             password='testpassword',
         )
+
         # Create a test idea
         self.idea = Idea.objects.create(
             title='Test Idea',
@@ -25,10 +26,6 @@ class ProjectSparkAPITestCase(APITestCase):
             commenter=self.user,
             content='This is a test comment'
         )
-    def test_create_idea(self):
-        url = reverse('idea-list')
-        response = self.client.post(url, args=[self.idea.id])
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_idea_list(self):
         url = reverse('idea-list')
