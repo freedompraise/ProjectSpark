@@ -9,15 +9,30 @@ from .views import (
     TagListAPIView,
     IdeaListByTagAPIView,
     IdeaRatingCreateAPIView,
-    IdeaRatingListAPIView,
     UserDashboardAPIView,
 )
 
 urlpatterns = [
-    path("register/", UserRegistrationView.as_view(), name="user-register"),
-    path("login/", UserLoginView.as_view(), name="user-login"),
-    path("ideas/", IdeaListAPIView.as_view(), name="idea-list"),
-    path("ideas/<int:pk>/", IdeaDetailAPIView.as_view(), name="idea-detail"),
+    path(
+        "register/", 
+        UserRegistrationView.as_view(), 
+        name="user-register"
+        ),
+    path(
+        "login/", 
+        UserLoginView.as_view(), 
+        name="user-login"
+        ),
+    path(
+        "ideas/", 
+        IdeaListAPIView.as_view(), 
+        name="idea-list"
+        ),
+    path(
+        "ideas/<int:pk>/", 
+        IdeaDetailAPIView.as_view(), 
+        name="idea-detail"
+        ),
     path(
         "ideas/<int:idea_id>/comments/",
         CommentListCreateAPIView.as_view(),
@@ -39,5 +54,9 @@ urlpatterns = [
         IdeaRatingCreateAPIView.as_view(),
         name="idea-rating-create",
     ),
-    path("dashboard/", UserDashboardAPIView.as_view(), name="user-dashboard"),
+    path(
+        "dashboard/", 
+        UserDashboardAPIView.as_view(),
+        name="user-dashboard"
+        ),
 ]

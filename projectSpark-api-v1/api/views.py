@@ -3,10 +3,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework import (
-    filters,
     generics,
     status,
-    viewsets,
 )
 
 # root
@@ -21,25 +19,20 @@ from .serializers import (
     FeedbackSerializer,
 )
 from .models import (
-    User,
     Idea,
     Comment,
     Tag,
     IdeaRating,
+    Feedback,
+    Progress,
+    Notification
+
 )
 
 # django
-from django.contrib.auth import authenticate
-from django.http import request
 from django.contrib.auth import get_user_model
-from django.db.models import Q
-from django.utils.text import slugify
 
 # jwt
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
