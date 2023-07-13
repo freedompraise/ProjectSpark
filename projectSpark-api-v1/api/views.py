@@ -41,8 +41,8 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 # yasg
-from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
+# from drf_yasg.utils import swagger_auto_schema
+# from drf_yasg import openapi
 
 User = get_user_model()
 
@@ -73,9 +73,12 @@ class UserLoginView(APIView):
         user = User.objects.filter(email=email).first()
 
         if user and user.check_password(password):
+            refresh = RefreshToken.for_user(user)
             return Response(
                 {
                     'message': 'Login successful',
+                    'access_token': str(refresh.access_token),
+                    'refresh_token': str(refresh),
                 },
                 status=status.HTTP_200_OK
             )

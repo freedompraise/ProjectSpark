@@ -35,5 +35,6 @@ class UserLoginTests(APITestCase):
         response = self.client.post(url, data)
         
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertTrue('token' in response.data)
+        self.assertTrue('access_token' in response.data)
+        self.assertTrue('refresh_token' in response.data)
         # Add more assertions as needed
