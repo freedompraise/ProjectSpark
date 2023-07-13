@@ -4,19 +4,20 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('api', '0005_auto_20230621_1040'),
+        ("api", "0005_auto_20230621_1040"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='idea',
-            name='tags',
+            model_name="idea",
+            name="tags",
         ),
         migrations.AddField(
-            model_name='idea',
-            name='tags',
-            field=models.ManyToManyField(blank=True, related_name='ideas', to='api.Tag'),
+            model_name="idea",
+            name="tags",
+            field=models.ManyToManyField(
+                blank=True, related_name="ideas", to="api.Tag"
+            ),
         ),
     ]

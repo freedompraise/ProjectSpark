@@ -13,8 +13,8 @@ class User(AbstractBaseUser):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'password']
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username", "password"]
 
     objects = UserManager()
 
@@ -46,18 +46,18 @@ class User(AbstractBaseUser):
 
     def get_short_name(self):
         return self.username
-    
+
     def set_password(self, password):
         self.password = password
 
     def check_password(self, password):
         return self.password == password
+
     class Meta:
-        app_label = 'api'
+        app_label = "api"
 
     def __str__(self):
         return self.username
-
 
 
 class Idea(models.Model):
@@ -66,15 +66,18 @@ class Idea(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    tags = models.ManyToManyField('Tag', related_name='ideas', blank=True)
+    tags = models.ManyToManyField("Tag", related_name="ideas", blank=True)
     total_rating = models.IntegerField(default=0)
     average_rating = models.DecimalField(max_digits=3, decimal_places=1, default=0)
-    slug = models.SlugField(max_length=50, 
-                            # unique=True, 
-                            blank=True)
+    slug = models.SlugField(
+        max_length=50,
+        # unique=True,
+        blank=True,
+    )
+
     def update_total_rating(self):
         if self.total_rating.exists():
-            self.total_rating = self.ratings.aggregate(Sum('rating'))['rating__sum']
+            self.total_rating = self.ratings.aggregate(Sum("rating"))["rating__sum"]
         else:
             self.total_rating = 0
 
@@ -84,7 +87,7 @@ class Idea(models.Model):
         else:
             self.average_rating = 0
         self.save()
-    
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Idea, self).save(*args, **kwargs)
@@ -103,9 +106,11 @@ class Comment(models.Model):
     def __str__(self):
         return f"Comment on '{self.idea.title}' by {self.commenter.username}"
 
+
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=50, unique=True)
+
     def __str__(self):
         return self.name
 
@@ -115,7 +120,7 @@ class Tag(models.Model):
         unique_slug = slug
         num = 1
         while Tag.objects.filter(slug=unique_slug).exists():
-            unique_slug = f'{slug}-{num}'
+            unique_slug = f"{slug}-{num}"
             num += 1
         return unique_slug
 
@@ -123,10 +128,12 @@ class Tag(models.Model):
 class IdeaRating(models.Model):
     idea = models.ForeignKey(Idea, on_delete=models.CASCADE)
     rater = models.ForeignKey(User, on_delete=models.CASCADE)
-    value = models.SmallIntegerField(choices=[(1, 'Upvote'), (-1, 'Downvote'), (0, 'Neutral')], default=0)
+    value = models.SmallIntegerField(
+        choices=[(1, "Upvote"), (-1, "Downvote"), (0, "Neutral")], default=0
+    )
 
     class Meta:
-        unique_together = ('idea', 'rater')
+        unique_together = ("idea", "rater")
 
 
 class Notification(models.Model):
@@ -138,15 +145,17 @@ class Notification(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ('-created_at',)
+        ordering = ("-created_at",)
+
 
 class Progress(models.Model):
     idea = models.ForeignKey(Idea, on_delete=models.CASCADE, related_name="progress")
-    user = models.ForeignKey(User, on_delete=models.CASCADE)    
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     progress = models.PositiveIntegerField()
 
     def __str__(self):
-        return f'Progress #{self.pk}'
+        return f"Progress #{self.pk}"
+
 
 class Feedback(models.Model):
     idea = models.ForeignKey(Idea, on_delete=models.CASCADE, related_name="feedback")
@@ -155,5 +164,4 @@ class Feedback(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Feedback #{self.pk}'
-    
+        return f"Feedback #{self.pk}"

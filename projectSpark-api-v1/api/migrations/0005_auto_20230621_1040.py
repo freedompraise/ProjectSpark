@@ -5,19 +5,24 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('api', '0004_auto_20230619_1246'),
+        ("api", "0004_auto_20230619_1246"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='idea',
-            name='tags',
+            model_name="idea",
+            name="tags",
         ),
         migrations.AddField(
-            model_name='idea',
-            name='tags',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='ideas', to='api.tag'),
+            model_name="idea",
+            name="tags",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="ideas",
+                to="api.tag",
+            ),
         ),
     ]

@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('api', '0002_user_last_login'),
+        ("api", "0002_user_last_login"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='idea',
-            name='title',
+            model_name="idea",
+            name="title",
             field=models.CharField(max_length=100, unique=True),
         ),
     ]

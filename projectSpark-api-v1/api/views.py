@@ -2,12 +2,13 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from rest_framework import(
+from rest_framework import (
     filters,
     generics,
     status,
     viewsets,
-) 
+)
+
 # root
 from .serializers import (
     UserSerializer,
@@ -26,27 +27,31 @@ from .models import (
     Tag,
     IdeaRating,
 )
+
 # django
 from django.contrib.auth import authenticate
 from django.http import request
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.utils.text import slugify
+
 # jwt
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer 
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
+
 # yasg
 # from drf_yasg.utils import swagger_auto_schema
 # from drf_yasg import openapi
 
 User = get_user_model()
 
-#REGISTRATION   
+
+# REGISTRATION
 class UserRegistrationView(APIView):
     permission_classes = (AllowAny,)
     authentication_classes = [JWTAuthentication]
@@ -57,7 +62,14 @@ class UserRegistrationView(APIView):
             user = serializer.save()
             token_serializer = TokenObtainPairSerializer()
             token = token_serializer.get_token(user)
-            return Response({'access': str(token.access_token), 'refresh': str(token), 'user': serializer.data}, status=status.HTTP_201_CREATED)
+            return Response(
+                {
+                    "access": str(token.access_token),
+                    "refresh": str(token),
+                    "user": serializer.data,
+                },
+                status=status.HTTP_201_CREATED,
+            )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -67,8 +79,8 @@ class UserLoginView(APIView):
     authentication_classes = [JWTAuthentication]
 
     def post(self, request):
-        email = request.data.get('email')
-        password = request.data.get('password')
+        email = request.data.get("email")
+        password = request.data.get("password")
 
         user = User.objects.filter(email=email).first()
 
@@ -76,16 +88,15 @@ class UserLoginView(APIView):
             refresh = RefreshToken.for_user(user)
             return Response(
                 {
-                    'message': 'Login successful',
-                    'access_token': str(refresh.access_token),
-                    'refresh_token': str(refresh),
+                    "message": "Login successful",
+                    "access_token": str(refresh.access_token),
+                    "refresh_token": str(refresh),
                 },
-                status=status.HTTP_200_OK
+                status=status.HTTP_200_OK,
             )
         else:
             return Response(
-                {'detail': 'Invalid credentials'},
-                status=status.HTTP_401_UNAUTHORIZED
+                {"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED
             )
 
 
@@ -99,7 +110,7 @@ class IdeaListAPIView(generics.ListCreateAPIView):
     # def get_queryset(self):
     #     user_id = request.user.id
     #     return Idea.objects.filter(created_by=user_id)
-    
+
 
 # RETRIEVE, UPDATE AND DELETE IDEAS
 class IdeaDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
@@ -122,6 +133,7 @@ class IdeaDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
         serializer.save()
         return Response(serializer.data)
 
+
 # CREATE COMMENTS
 class CommentListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = CommentSerializer
@@ -129,12 +141,13 @@ class CommentListCreateAPIView(generics.ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
 
     def perform_create(self, serializer):
-        idea_id = self.kwargs['idea_id']
+        idea_id = self.kwargs["idea_id"]
         serializer.save(idea_id=idea_id)
-    
+
     def get_queryset(self):
-        idea_id = self.kwargs['idea_id']
+        idea_id = self.kwargs["idea_id"]
         return Comment.objects.filter(idea_id=idea_id)
+
 
 # LIST COMMENTS
 class CommentListAPIView(generics.ListAPIView):
@@ -143,7 +156,7 @@ class CommentListAPIView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
 
     def get_queryset(self):
-        idea_id = self.kwargs['idea_id']
+        idea_id = self.kwargs["idea_id"]
         return Comment.objects.filter(idea_id=idea_id)
 
 
@@ -154,7 +167,8 @@ class CommentRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView)
     permission_classes = (AllowAny,)
     authentication_classes = [JWTAuthentication]
 
-# TAGS 
+
+# TAGS
 class TagListAPIView(generics.ListCreateAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
@@ -162,9 +176,12 @@ class TagListAPIView(generics.ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
 
     def perform_create(self, serializer):
-        tag_name = self.request.data.get('name')  # Assuming the tag name is provided in the request data
+        tag_name = self.request.data.get(
+            "name"
+        )  # Assuming the tag name is provided in the request data
         slug = Tag.generate_unique_slug(tag_name)
         serializer.save(slug=slug)
+
 
 class IdeaListByTagAPIView(generics.ListAPIView):
     serializer_class = IdeaSerializer
@@ -172,9 +189,10 @@ class IdeaListByTagAPIView(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
 
     def get_queryset(self):
-        tag_slug = self.kwargs['tag_slug']
+        tag_slug = self.kwargs["tag_slug"]
         tag = Tag.objects.get(slug=tag_slug)
         return Idea.objects.filter(tags=tag)
+
 
 class IdeaRatingCreateAPIView(generics.CreateAPIView):
     queryset = IdeaRating.objects.all()
@@ -183,25 +201,28 @@ class IdeaRatingCreateAPIView(generics.CreateAPIView):
     authentication_classes = [JWTAuthentication]
 
     def perform_create(self, serializer):
-        idea_id = self.kwargs['idea_id']
+        idea_id = self.kwargs["idea_id"]
         idea = Idea.objects.get(pk=idea_id)
         if self.request.user.is_authenticated:
             serializer.save(rater=self.request.user, idea=idea)
             idea.update_total_rating()
         else:
-            return Response({'error': 'Authentication is required to rate an idea.'}, status=status.HTTP_401_UNAUTHORIZED)
-            
+            return Response(
+                {"error": "Authentication is required to rate an idea."},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+
     def perform_update(self, serializer):
         serializer.save()
         self.get_object().update_total_rating()
-       
+
 
 class IdeaRatingListAPIView(generics.ListAPIView):
     serializer_class = IdeaRatingSerializer
     permission_classes = (AllowAny,)
 
     def get_queryset(self):
-        idea_id = self.kwargs['idea_id']
+        idea_id = self.kwargs["idea_id"]
         return IdeaRating.objects.filter(idea_id=idea_id)
 
 
@@ -217,9 +238,11 @@ class NotificationListAPIView(generics.ListAPIView):
 
 class UserDashboardAPIView(generics.RetrieveAPIView):
     serializer_class = UserSerializer
-    permission_classes = [AllowAny,]
+    permission_classes = [
+        AllowAny,
+    ]
     authentication_classes = [JWTAuthentication]
-    
+
     def get_object(self):
         user = self.request.user
         return user
@@ -235,10 +258,10 @@ class UserDashboardAPIView(generics.RetrieveAPIView):
         progress_serializer = ProgressSerializer(progress)
 
         data = {
-            'user': user_serializer.data,
-            'ideas': idea_serializer.data,
-            'feedbacks': feedback_serializer.data,
-            'progress': progress_serializer.data,
+            "user": user_serializer.data,
+            "ideas": idea_serializer.data,
+            "feedbacks": feedback_serializer.data,
+            "progress": progress_serializer.data,
         }
 
         return Response(data)
