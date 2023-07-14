@@ -56,11 +56,6 @@ pip install -r requirements.txt
 ```
 
 6. Set up the database:
-Change working directory to BASE_DIR
-```sh 
-cd projecSpark
-```
-Run
 ```sh 
 python manage.py migrate
 ```
