@@ -39,7 +39,7 @@ jobs:
         source projectSpark-api-v1/venv/bin/activate
         python -m pip install --upgrade pip==21.2.4
         pip install wheel
-        pip install -r requirements.txt
+        pip install -r projectSpark-api-v1/requirements.txt
         
 
     - name: Run Tests

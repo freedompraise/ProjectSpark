@@ -28,14 +28,19 @@ These instructions will help you get the project up and running on your local ma
 ```bash
 git clone https://github.com/freedompraise/projectSpark-api-v1.git
 ```
+2. Change working directory to the backend api
 
-2. Create a virtual environment:
+```bash
+cd projectSpark-api-v1
+```
+
+3. Create a virtual environment:
 
 ```bash 
 python3 -m venv venv
 ```
 
-3. Activate the virtual environment:
+4. Activate the virtual environment:
 - For Linux/macOS:
   ```
   source venv/bin/activate
@@ -45,22 +50,17 @@ python3 -m venv venv
   venv\Scripts\activate
   ```
 
-4. Install the required dependencies:
+5. Install the required dependencies:
 ```bash 
 pip install -r requirements.txt
 ```
 
-5. Set up the database:
-Change working directory to BASE_DIR
-```sh 
-cd projecSpark
-```
-Run
+6. Set up the database:
 ```sh 
 python manage.py migrate
 ```
 
-6. Start the development server:
+7. Start the development server:
 ```bash 
 python manage.py runserver
 ```
