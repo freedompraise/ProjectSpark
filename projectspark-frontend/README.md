@@ -1,40 +1,43 @@
-### ProjectSpark Frontend
+## ProjectSpark Frontend
+Project Spark Frontend is the web interface for the idea sharing and collaboration platform powered by the Project Spark API. It is built using Next.js, a popular React framework, providing a modern and efficient development environment for frontend development.
+### Frontend Structure
 
+The frontend of ProjectSpark is built using Next.js, a popular React framework. 
 
-## Available Scripts
+### Explanation of the Structure
+- public/: This folder contains the static files used in the frontend, such as the main index.html file.
 
-In the project directory, you can run:
+- src/: This is the main folder where all the source code of the frontend resides.
 
-### `npm start`
+- assets/: This folder contains any assets used in the project, such as images.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- components/: This folder contains reusable React components used across different pages.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- pages/: This folder contains Next.js page components that represent the different pages of the application, such as the Dashboard and IdeaDetails pages.
 
-### `npm test`
+- utils/: This folder contains utility functions and services used in the frontend, such as API handling.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- App.js: This is the main component that acts as the entry point of the application.
 
-### `npm run build`
+- index.js: This is the main entry file that renders the root component (App.js) and starts the React application.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- .env: This file contains environment variables used in the frontend. It is used to store configuration details.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- .gitignore: This file specifies which files and folders should be ignored by Git version control.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- package.json: This file contains metadata and dependencies for the frontend project.
 
-### `npm run eject`
+### Development Setup
+To run the frontend locally, follow these steps:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. Install Node.js and npm (Node Package Manager) if you haven't already.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. Clone the repository and navigate to the projectspark-frontend directory.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. Install the required dependencies using npm install.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+4. Start the development server using npm run dev.
 
+The frontend will be accessible at http://localhost:3000.
+
+Please note that this is a brief overview of the frontend structure, and additional details can be found within the individual files and folders of the project. If you have any specific questions or need more information, refer to the codebase or reach out to the development team.
