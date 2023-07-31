@@ -28,7 +28,7 @@ To get started with Project Spark, follow these steps:
 
 1. Clone the repository ```git clone 
 https://github.com/freedompraise/projectspark.git```
-2. Install the necessary dependencies: `npm install`
+2. Install the necessary dependencies for the frontend using: `npm install`
 3. Configure the backend API endpoint in the frontend code.
 4. Build and run the frontend application: `npm run start`
 
