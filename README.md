@@ -2,6 +2,8 @@
 
 Project Spark is an innovative platform that allows developers to capture and share ideas for software projects, providing a space for collaboration and project management.
 
+<img src ="public/project_spark.svg" alt="projectspark logo" />
+
 ## Table of Contents
 - [Project Overview](#project-overview)
 - [Features](#features)
