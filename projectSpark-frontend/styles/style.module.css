@@ -1,0 +1,9 @@
+/* CSS modules are scoped to JSX element automatically, creating a unique classname in different JSX file with zero worries about collisions of the same classname in any files.  */
+
+/* though we will be defining most of our colour teams in the tailwind.config.js file without creating a css :root sudo class, the aim is to keep your CSS DRY(don't repeat your self) */
+
+/* global styles will be used within global files, custom remains here!!! */
+
+.text {
+    /* value empty for now hahaha!!! */
+}
