@@ -32,7 +32,7 @@ To get started with Project Spark, follow these steps:
 https://github.com/freedompraise/projectspark.git```
 2. Install the necessary dependencies for the frontend using: `npm install`
 3. Configure the backend API endpoint in the frontend code.
-4. Build and run the frontend application: `npm run start`
+4. Build and run the frontend application: `npm run dev`
 
 ## Usage
 Once the project is set up and running, users can perform the following actions:
