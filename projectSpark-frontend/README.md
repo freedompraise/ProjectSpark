@@ -8,13 +8,13 @@ The frontend of ProjectSpark is built using Next.js, a popular React framework.
 
 ### Explanation of the Structure
 
-- app/: the app folder is an essential folder in nextjs which contains dynamic or static route for file base routing. It involes api route when working with MERN application (Mongodb, express, React and Nodejs)
+- app/: the app folder is an essential folder in nextjs which contains dynamic or static route for file base routing. It involves api route when working with MERN application (Mongodb, express, React and Nodejs)
 
 - constants/: this folder contains all static text that will be shown on the UI/ client aplication
 
 - global/: this folder contains CSS utility class that can be applied globally within the UI
 
--styles/: this folder contains CSS utility that can be applied on individual components
+- styles/: this folder contains CSS utility that can be applied on individual components
 
 - public/: This folder contains the static files used in nextjs for client application only, such as the public assets folders for images
 
