@@ -18,8 +18,6 @@ The frontend of ProjectSpark is built using Next.js, a popular React framework.
 
 - public/: This folder contains the static files used in nextjs for client application only, such as the public assets folders for images
 
-- assets/: This folder contains any assets used in the project, such as images.
-
 - components/: This folder contains components e.g navbar that can be used in creating the layout of our application also contains reusable React components used across different pages e.g button.
 
 - page/: the page file in nextjs is an essential file in nextjs, which serve as Home page Or entry point in nextjs other componts can be rendered within the page components. The page file can be located inside the nextjs app folder.
