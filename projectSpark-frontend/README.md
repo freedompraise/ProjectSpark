@@ -1,10 +1,10 @@
 ## ProjectSpark Frontend
 
-Project Spark Frontend is the web interface for the idea sharing and collaboration platform powered by the Project Spark API. It is built using Next.js, a popular React framework, providing a modern and efficient development environment for frontend development.
+**Project Spark Frontend** is the web interface for the idea sharing and collaboration platform powered by the Project Spark API. It is built using *Next.js*, a popular React framework, providing a modern and efficient development environment for frontend development.
 
 ### Frontend Structure
 
-The frontend of ProjectSpark is built using Next.js, a popular React framework.
+The frontend of *ProjectSpark* is built using *Next.js*, a popular React framework.
 
 ### Explanation of the Structure
 
@@ -34,14 +34,14 @@ The frontend of ProjectSpark is built using Next.js, a popular React framework.
 
 To run the frontend locally, follow these steps:
 
-1. Install Node.js and npm (Node Package Manager) if you haven't already.
+1. Install *Node.js* and *npm (Node Package Manager)* if you haven't already.
 
-2. Clone the repository and navigate to the projectspark-frontend directory.
+2. Clone the repository and navigate to the *projectspark-frontend* directory.
 
-3. Install the required dependencies using npm install.
+3. Install the required dependencies using ``` npm install.```
 
-4. Start the development server using npm run dev.
+4. Start the development server using ``` npm run dev. ```
 
-The frontend will be accessible at http://localhost:3000.
+The frontend will be accessible at https://localhost:3000.
 
 Please note that this is a brief overview of the frontend structure, and additional details can be found within the individual files and folders of the project. If you have any specific questions or need more information, refer to the codebase or reach out to the development team.
