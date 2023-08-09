@@ -8,6 +8,8 @@ The frontend of ProjectSpark is built using Next.js, a popular React framework.
 
 ### Explanation of the Structure
 
+- context/: the context folder is applicable for state management in react, passing usestate values from one components to another.
+
 - app/: the app folder is an essential folder in nextjs which contains dynamic or static route for file base routing. It involves api route when working with MERN application (Mongodb, express, React and Nodejs)
 
 - constants/: this folder contains all static text that will be shown on the UI/ client aplication
@@ -18,7 +20,7 @@ The frontend of ProjectSpark is built using Next.js, a popular React framework.
 
 - public/: This folder contains the static files used in nextjs for client application only, such as the public assets folders for images
 
-- assets/: This folder contains any assets used in the project, such as images.
+- constants/: this folder contains all static text that will be shown on the UI/ client aplication
 
 - components/: This folder contains components e.g navbar that can be used in creating the layout of our application also contains reusable React components used across different pages e.g button.
 
@@ -36,14 +38,14 @@ The frontend of ProjectSpark is built using Next.js, a popular React framework.
 
 To run the frontend locally, follow these steps:
 
-1. Install Node.js and npm (Node Package Manager) if you haven't already.
+1. Install *Node.js* and *npm (Node Package Manager)* if you haven't already.
 
-2. Clone the repository and navigate to the projectspark-frontend directory.
+2. Clone the repository and navigate to the *projectspark-frontend* directory.
 
-3. Install the required dependencies using npm install.
+3. Install the required dependencies using ``` npm install.```
 
-4. Start the development server using npm run dev.
+4. Start the development server using ``` npm run dev. ```
 
-The frontend will be accessible at http://localhost:3000.
+The frontend will be accessible at https://localhost:3000.
 
 Please note that this is a brief overview of the frontend structure, and additional details can be found within the individual files and folders of the project. If you have any specific questions or need more information, refer to the codebase or reach out to the development team.
