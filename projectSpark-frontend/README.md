@@ -8,25 +8,25 @@ The frontend of ProjectSpark is built using Next.js, a popular React framework.
 
 ### Explanation of the Structure
 
-- context/: the context folder is applicable for state management in react, passing usestate values from one components to another.
+- context: the context folder is applicable for state management in react, passing usestate values from one components to another.
 
-- app/: the app folder is an essential folder in nextjs which contains dynamic or static route for file base routing. It involves api route when working with MERN application (Mongodb, express, React and Nodejs)
+- app: the app folder is an essential folder in nextjs which contains dynamic or static route for file base routing. It involves api route when working with MERN application (Mongodb, express, React and Nodejs)
 
-- constants/: this folder contains all static text that will be shown on the UI/ client aplication
+- constants: this folder contains all static text that will be shown on the UI/ client aplication
 
-- global/: this folder contains CSS utility class that can be applied globally within the UI
+- global: this folder contains CSS utility class that can be applied globally within the UI
 
-- styles/: this folder contains CSS utility that can be applied on individual components
+- styles: this folder contains CSS utility that can be applied on individual components
 
-- public/: This folder contains the static files used in nextjs for client application only, such as the public assets folders for images
+- public: This folder contains the static files used in nextjs for client application only, such as the public assets folders for images
 
-- constants/: this folder contains all static text that will be shown on the UI/ client aplication
+- constants: this folder contains all static text that will be shown on the UI/ client aplication
 
-- components/: This folder contains components e.g navbar that can be used in creating the layout of our application also contains reusable React components used across different pages e.g button.
+- components: This folder contains components e.g navbar that can be used in creating the layout of our application also contains reusable React components used across different pages e.g button.
 
-- page/: the page file in nextjs is an essential file in nextjs, which serve as Home page Or entry point in nextjs other componts can be rendered within the page components. The page file can be located inside the nextjs app folder.
+- page: the page file in nextjs is an essential file in nextjs, which serve as Home page Or entry point in nextjs other componts can be rendered within the page components. The page file can be located inside the nextjs app folder.
 
-- utils/: This folder contains utility functions and services used in the frontend, such as API handling.
+- utils: This folder contains utility functions and services used in the frontend, such as API handling.
 
 - .env: This file contains environment variables used in the frontend. It is used to store configuration details.
 
