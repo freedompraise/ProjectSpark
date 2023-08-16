@@ -7,6 +7,7 @@
 The frontend of *ProjectSpark* is built using *Next.js*, a popular React framework.
 
 ### Explanation of the Structure
+- context/: the context folder is applicable for state management in react, passing usestate values from one components to another.
 
 - app/: the app folder is an essential folder in nextjs which contains dynamic or static route for file base routing. It involves api route when working with MERN application (Mongodb, express, React and Nodejs)
 
